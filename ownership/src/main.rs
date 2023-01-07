@@ -1,4 +1,4 @@
-fn main() { //s is not valid here, because it was not yet declared
+fn main() { //st is not valid here, because it was not yet declared
     
     // st value is hardcoded and immutable
     // string literals are known at compile time
@@ -63,6 +63,17 @@ fn main() { //s is not valid here, because it was not yet declared
     
     println!("that_yet_string = {}, has a length of {}", that_yet_string, length_of_yet_another_string);
     //prints: `that_yet_string = let's find out the length of this string, has a length of 40`
+    
+    
+    // let otpx = if true {1} else {"hello"}; //not allowed, because the types are different
+    // assert_eq!(optx + 1,2)
+    
+    // this will also not compile, because the compiler assumes, s6 was moved when calling move_two, even though it was not used
+    // let (s5, s6) = (String::from("a"), String::from("b"));
+    // let s7 = move_two(s5, s6);
+    
+    // println!("{}, {}", s6, s7) //it won't compile
+    
 } //neither is s valid here, because it's out of scope. The curly brace calls the drop() function
 
 fn takes_ownership(some_string: String) { //some_string comes into scope
@@ -88,4 +99,8 @@ fn takes_and_gives_back(a_string: String) -> String {
 fn calculate_length(s: String) -> (String, usize) {
     let length = s.len();
     (s, length)
+}
+
+fn move_two(s1: String, s2: String) -> String {
+    s1
 }
