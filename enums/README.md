@@ -39,3 +39,27 @@ fn main() {
     let loopback = IpAddrKind::V6(String::from("::1"));
 }
 ```
+
+Another example of how we can use enums to combine different types:
+
+```rust
+enum Message {
+    Quit, 
+    Move { x: i32, y: i32 }, 
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+```
+
+now let's look at the equivalent with structs... way more verbose 
+
+```rust
+struct QuitMessage; // unit struct
+struct MoveMessage {
+    x: i32,
+    y: i32,
+}
+struct WriteMessage(String); // tuple struct
+struct ChangeColorMessage(i32, i32, i32); // tuple struct
+```
+

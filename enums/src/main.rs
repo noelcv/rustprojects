@@ -22,7 +22,6 @@ enum IpAddrKind {
 }
 
 
-
 fn main() {
     
     let four = IpAddrKind::V4;

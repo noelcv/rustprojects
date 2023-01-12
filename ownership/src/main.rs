@@ -11,10 +11,8 @@ fn main() { //st is not valid here, because it was not yet declared
     //we need a way to return its memory to the allocator, so we use the String::from function
     let mut s = String::from("hello");
     
-    
     s.push_str(", world"); // push_str() appends a literal to a String
     println!("{}", s); //prints: `hello, world`
-    
     
     let s1 = String::from("Hola");
     let s2 = s1;

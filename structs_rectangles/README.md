@@ -38,3 +38,5 @@ Using the derive keyword we can extend the default behavior of our structs, givi
 - `Clone` and `Copy` - for Duplicating Values;
 - `Hash` - for Mapping a Value to a Value of Fixed Size;
 - `Default` - for Default Values.
+
+## Methods
