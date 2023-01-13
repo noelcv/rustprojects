@@ -63,3 +63,41 @@ struct WriteMessage(String); // tuple struct
 struct ChangeColorMessage(i32, i32, i32); // tuple struct
 ```
 
+An enum is some sort of super type aggregator.
+We can use `impl` with it to define methods.
+
+
+### Rust doesn't have NULL!!!!!
+Because trying to use a null value as not-null value would throw an error,
+Rust has a different approach for expressing the concept of a value that is currently invalid or absent
+
+```rust
+enum Option<T> {
+    None,
+    Some(T)
+}
+```
+
+This Option is made available without need to import it.
+
+`Option<T>` and `T` are different types.
+
+```rust
+
+let x: i8 = 5;
+let y: Option<i8> = Some(5);
+let sum = x + y;
+
+//this would not compile.
+```
+
+In other words, it wouldn't work, because if we tell the compiler we want a value of a type, Rust will make sure we only accept valid values.
+
+Otherwise, we need to perform some sort of checks to use the `T` out of the `Option<T>`. -> to prevent the risk of assuming a not-null value incorrectly
+
+Basically, 
+
+- If there is a possibility of having a null value, use `Option<T>` and explicitly handle it
+- otherwise, you can assume that the value will not be null.
+
+To use the value `T` we'll need to define some code for each variant and use `match` expression as a control flow tool to check the variants.
