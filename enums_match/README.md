@@ -11,3 +11,49 @@ Quick Notes
 - It's like a coin-sorting machine, with holes. The first fitting hole will let the coin in.
 
 - While a `if` statement returns a boolean a `match` can return any type
+
+> *"Combining match and enums is useful in many situations. You’ll see this pattern a lot in Rust code: match against an enum, bind a variable to the data inside, and then execute code based on it. It’s a bit tricky at first, but once you get used to it, you’ll wish you had it in all languages. It’s consistently a user favorite."*
+
+## Catch-all patterns
+
+Once matches are exhaustive, we always need to cover all the possibilities. One way of doing that is with a catch-all pattern, like the one in the example provided in The Book. :
+
+```rust
+let dice_roll = 9;
+match dice_roll {
+  3 => add_fancy_hat();
+  7 => remove_fancy_hat();
+  other => move_player(other);
+  
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
+```
+
+In the example above, other will be passed to the move_player function when the roll_dice is not 3 or 7.
+
+If we wouldn't want to use the value we could use the `_` pattern.
+
+```rust
+let dice_roll = 9;
+match dice_roll {
+  3 => add_fancy_hat();
+  7 => remove_fancy_hat();
+  _ => reroll();  
+
+}
+...
+fn reroll() {}
+```
+
+When using an empty tuple, we are explicitly telling Rust that we are only interested in the patterns provided, and in an absence of such a match, the code shall not run.
+
+```rust
+match dice_roll {
+  3 => add_fancy_hat();
+  7 => remove_fancy_hat();
+  _ => (); 
+}
+```
