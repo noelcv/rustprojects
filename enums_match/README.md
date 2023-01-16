@@ -57,3 +57,43 @@ match dice_roll {
   _ => (); 
 }
 ```
+
+### `If Let` is Syntatic sugar for a `match` when a value matches a pattern and ignores the rest
+
+```rust
+
+    let config_max = Some(3u8);
+    // match config_max {
+    //     Some(max) => println!("Max is {}", max),
+    //     _ => (),
+    // }
+    
+    //the above can be reduced to:
+    //a pattern and an expression separated by an equal sign
+    if let Some(max) = config_max {
+        println!("Max is {}", max);
+    }
+    
+    //we can also use if let with else
+    let mut count = 0;
+    let coin = Coin::Quarter(UsState::Alaska);
+    //instead of...
+    // match coin {
+    //     Coin::Quarter(state) => println!("State quarter from {:?}", state),
+    //     _ => count += 1,
+    // }
+    
+    //we can have it like this...
+    if let Coin::Quarter(state) = coin {
+        println!("State quarter from {:?}", state);
+    } else {
+        count += 1;
+    }
+```
+
+#### Pros and Cons
+
+- Less typing
+- Less indentation
+- Less typing
+- but also less exhaustive checking

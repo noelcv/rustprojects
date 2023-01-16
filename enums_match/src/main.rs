@@ -48,6 +48,37 @@ fn main() {
         None => println!("None!")
     };
     println!("&opt= {:?}", opt); //&opt= Some("Hello World")
+    
+    
+    //IF LET -- or how to reduce verbose
+    
+    let config_max = Some(3u8);
+    // match config_max {
+    //     Some(max) => println!("Max is {}", max),
+    //     _ => (),
+    // }
+    
+    //the above can be reduced to:
+    //a pattern and an expression separated by an equal sign
+    if let Some(max) = config_max {
+        println!("Max is {}", max);
+    }
+    
+    //we can also use if let with else
+    let mut count = 0;
+    let coin = Coin::Quarter(UsState::Alaska);
+    //instead of...
+    // match coin {
+    //     Coin::Quarter(state) => println!("State quarter from {:?}", state),
+    //     _ => count += 1,
+    // }
+    
+    //we can have it like this...
+    if let Coin::Quarter(state) = coin {
+        println!("State quarter from {:?}", state);
+    } else {
+        count += 1;
+    }
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
