@@ -25,6 +25,29 @@ fn main() {
     let none = plus_one(None);
     println!("Six variable is {:?}", six); //prints: Six variable is Some(6)
     println!("None variable is {:?}", none); //prints: None variable is None
+    
+    //Matches and Ownership
+    let opt: Option<String> = Some(String::from("Hello World")); //plain enum - type Option<String> 
+    match opt {
+        Some(_) => println!("Some"), //prints: Some("Hello World")
+        None => println!("None")
+    }
+    
+    //this doesn't work as the type is ot a reference `&Option<String>`
+    // match opt {
+    //     Some(s) => println!("Some"), //her the opt is moved...
+    //     None => println!("None")
+    // }
+    
+    println!("{:?}", opt); //...so this is not allowed
+    
+    //the idiomatic way is to use a reference, so no moved happens
+    //Some(s) will just grab a reference to the inner field &String
+    match &opt {
+        Some(s) => println!("Some: {}", s), //prints: Some: Hello World
+        None => println!("None!")
+    };
+    println!("&opt= {:?}", opt); //&opt= Some("Hello World")
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
@@ -44,6 +67,7 @@ fn value_in_cents(coin: Coin) -> u8 {
             25
         }
     }
+
 }
 
 fn plus_one(x: Option<i32>) -> Option<i32> {
