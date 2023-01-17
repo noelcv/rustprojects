@@ -42,3 +42,5 @@ crate
          ├── serve_order
          └── take_payment
 ```
+
+Although using modules has no impact at runtime, but rather at compile time, splitting it like that makes it easier to navigate in larger codebases, just like in TypeScript, for instance.
