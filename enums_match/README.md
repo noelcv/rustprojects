@@ -98,5 +98,4 @@ match dice_roll {
 - Less typing
 - but also less exhaustive checking
 
-
 As a thumbs rule, *"if the function needs to return a value for each condition, then a match is most appropriate."*
