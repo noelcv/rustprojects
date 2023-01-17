@@ -44,3 +44,45 @@ crate
 ```
 
 Although using modules has no impact at runtime, but rather at compile time, splitting it like that makes it easier to navigate in larger codebases, just like in TypeScript, for instance.
+
+***
+
+## Paths
+
+- ***Absolute paths*** -> starts from the `crate`
+- ***Relative paths*** -> starts from current module, and uses `self`, `super` or other identifier
+
+Child modules can see the context they're defined, but hiding inner implementation details is the default.So, parents cannot see or don't have access to those details unless they're public.
+
+>*"making the module public doesn’t make its contents public"*
+
+>*"The privacy rules apply to structs, enums, functions, and methods as well as modules"*
+
+```rust
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+        
+        fn seat_at_table() {}
+    }
+    
+    mod serving {
+        fn take_order() {}
+        
+        fn serve_order() {}
+        
+        fn take_payment() {}
+    }
+}
+
+pub fn eat_at_restaurant() {
+    //absolute path
+    crate::front_of_house::hosting::add_to_waitlist();
+    
+    //relative path
+    front_of_house::hosting::add_to_waitlist();
+}
+
+```
+
+More info at [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)
