@@ -1,4 +1,4 @@
-## Modules
+# Modules
 
 [Reference Guide](https://rust-book.cs.brown.edu/ch07-02-defining-modules-to-control-scope-and-privacy.html)
 ***
@@ -51,6 +51,8 @@ Although using modules has no impact at runtime, but rather at compile time, spl
 
 - ***Absolute paths*** -> starts from the `crate`
 - ***Relative paths*** -> starts from current module, and uses `self`, `super` or other identifier
+  
+  - the `super` keyword is great for logic that most likely will remain closer in scope, and if it is moved, most likely will be moved together.
 
 Child modules can see the context they're defined, but hiding inner implementation details is the default.So, parents cannot see or don't have access to those details unless they're public.
 
@@ -81,8 +83,108 @@ pub fn eat_at_restaurant() {
     
     //relative path
     front_of_house::hosting::add_to_waitlist();
+    
+    //order a breakfast in the summer with an a whole wheat toast
+    let mut meal = back_of_house::Breakfast::summer("whole wheat");
+    
+    //Change our mind
+    meal.toast = String::from("bagel");
+    println!("I'd like a {} toast, bitte!", meal.toast);
+    
+    //the next line wouldn't compile because seasonal_fruit is private
+    //meal.seasonal_fruit = String::from("pineapple");
 }
 
 ```
 
 More info at [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)
+
+## Making Structs and Enums Public
+
+we keep the same logic of public and private fields. A struct may be public, and yet have private fields
+
+If a struct has privates fields, we need a public associated function to construct an instance of it.
+
+```rust
+mod back_of_house {
+    
+    pub struct Breakfast {
+        pub toast: String,
+        seasonal_fruit: String,
+    }
+    
+    impl Breakfast {
+        //because Breakfast includes a private field, 
+        //we need to provide a public associate function to construct an instance
+        pub fn summer(toast: &str) -> Breakfast {
+            Breakfast {
+                toast: String::from(toast),
+                seasonal_fruit: String::from("peaches"),
+            }
+        }
+    }
+}
+```
+
+However, in a public enum all the variants are public.
+
+```rust
+  pub enum Appetizer {
+        Soup,
+        Salad,
+    }
+    
+  let order1 = back_of_house::Appetizer::Soup;
+```
+
+
+## `Use` keyword to save the day
+Use makes modules available in the scope where is defined ands keeps the code dry
+
+```rust
+use crate::front_of_house::hosting;
+
+pub fn eat_at_restaurant() {
+    //specifying the parent module makes it clear where the function comes from
+    hosting::add_to_waitlist();
+}
+
+//to make it available to the next module use super
+
+mod customer {
+    pub fn eat_at_restaurant() {
+        super::hosting::add_to_waitlist();
+    }
+}
+```
+
+When importing a struct, though, the convention is to specify the full path, unless there is name collision:
+
+```rust
+use std::collections::HashMap;
+
+fn main() {
+    let mut map = HashMap::new();
+    map.insert(1, 2);
+}
+
+...
+
+use std::fmt;
+use std::io;
+
+fn function1() -> fmt::Result {}
+
+fn function2() -> io::Result<()> {}
+```
+
+## We can also use `as` to cast *alias*
+
+```rust
+use::std::fmt::Result;
+use::std:io::Result as IoResult;
+
+fn function2() -> IoResult<()> {}
+
+
+```
