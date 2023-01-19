@@ -219,3 +219,72 @@ pub fn eat_at_restaurant() {
 }
 
 ```
+
+## External Packages
+
+Like a package.json file, we use Cargo.toml to specify which packages and dependencies we'll be using in a project
+
+- list them in the Cargo.toml file
+
+```toml
+  [dependencies]
+  `rand = "0.8.3."`
+```
+
+- Use the `use` keyword to bring them to scope
+
+```rust
+use rand::Rng;
+
+//it comes from the standard collection - no need to include in the Cargo.toml 
+use std::collections::HashMap; 
+
+fn main() {
+    let secret_number = rand::thread_rng().gen_range(1..=100);
+}
+```
+
+- Using nested paths we can bring several modules from a given crate
+  
+  - In Rust, the equivalent would be:
+  
+ ```rust
+ //instead of separate imports
+ use std::cmp::Ordering;
+ use std::io;
+ //we can group it like this
+ use std::{cmp::Ordering, io}
+ ```
+
+- In JS/TS, you'd do something like this:
+
+```javascript
+  import { readFileSync, writeFileSync } from 'fs'
+  import { useEffect, useState } from 'react'
+  ```  
+  
+- Merging paths into one statement
+  
+```rust
+use std::io;
+use std::io::Write;
+
+//could be refactored into:
+use std::io::{self, Write};
+```
+
+### The glob operator ( `*` ) is basically a wildcard to bring everything into scope;
+
+- in Javascript:
+  
+```javascript
+import * from 'fs'
+```
+
+- in Rust:
+
+```rust
+use std::collections::*;
+```
+
+- It shall be used with caution, for both clarity, and to avoid bringing unnecessary modules into scope.
