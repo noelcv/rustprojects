@@ -139,7 +139,7 @@ However, in a public enum all the variants are public.
 
 
 ## `Use` keyword to save the day
-Use makes modules available in the scope where is defined ands keeps the code dry
+Use makes modules available in the scope where is defined and keeps the code dry
 
 ```rust
 use crate::front_of_house::hosting;
@@ -186,5 +186,36 @@ use::std:io::Result as IoResult;
 
 fn function2() -> IoResult<()> {}
 
+```
+
+## `pub use` to re-export modules, shorten paths or simply expose the code under a different light
+
+It's all about code structure and design for both builders and consumers of the code.
+
+- like in the restaurant analogy
+  - we can think of back and front of the house
+  - but the clients only think of it it in terms of a restaurant
+  - so we can have our code structure and still expose it differently
+
+```rust
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+}
+
+//without pub use
+pub fn eat_at_restaurant() {
+    //assuming restaurant as the name of the crate
+    restaurant::front_of_house::hosting::add_to_waitlist()
+}
+
+//with pub use we reexport the module to allow for it to be called
+//"as if" it's being declared in that scope:
+pub use crate::front_of_house::hosting;
+
+pub fn eat_at_restaurant() {
+    hosting::add_to_waitlist();
+}
 
 ```
