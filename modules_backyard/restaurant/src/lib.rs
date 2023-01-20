@@ -1,20 +1,5 @@
-mod front_of_house {
-    pub mod hosting {
-        pub fn add_to_waitlist() {
-            println!("Welcome to Ferris' rusty bistro, you're on the waitlist")
-        }
-        
-        fn seat_at_table() {}
-    }
-    
-    mod serving {
-        fn take_order() {}
-        
-        fn serve_order() {}
-        
-        fn take_payment() {}
-    }
-}
+mod front_of_house;
+mod back_of_house;
 
 //Re-exporting with pub use
 //we bring to this scope the hosting module and make it accessible for other modules to call it
@@ -46,43 +31,3 @@ pub fn eat_at_restaurant() {
 }
 
 //front_of_house and eat_at_restaurant are siblings
-
-
-fn deliver_order() {
-    println!("Et voilà...bon appétit!");
-}
-
-mod back_of_house {
-    fn fix_incorrect_order() {
-        cook_order();
-        //here we use super to refer to the parent module scope
-        //good to use when we know that similar logic will remain closer, and if they are to move,
-        //will move together
-        super::deliver_order();
-    }
-    
-    fn cook_order() {
-        println!("Cooking order...");
-    }
-    
-    pub struct Breakfast {
-        pub toast: String,
-        seasonal_fruit: String,
-    }
-    
-    impl Breakfast {
-        //because Breakfast includes a private field, 
-        //we need to provide a public associate function to construct an instance
-        pub fn summer(toast: &str) -> Breakfast {
-            Breakfast {
-                toast: String::from(toast),
-                seasonal_fruit: String::from("peaches"),
-            }
-        }
-    }
-    
-    pub enum Appetizer {
-        Soup,
-        Salad,
-    }
-}
