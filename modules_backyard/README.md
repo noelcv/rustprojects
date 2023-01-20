@@ -3,6 +3,8 @@
 [Reference Guide](https://rust-book.cs.brown.edu/ch07-02-defining-modules-to-control-scope-and-privacy.html)
 ***
 
+For exploring the code structure of a module and annotations browse to the restaurant directory `cd restaurant`
+
 - *paths* - to name things
 - `use` - to bring a path into scope
 - `pub` - to make items public
