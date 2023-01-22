@@ -116,4 +116,13 @@ The standard library includes methods like `contains` and `replace`, that can he
 
 >"&str is a promise that the byte sequence it points to will always be valid UTF-8. Therefore a programmer who wants to e.g. print out an &str never needs to check if it is valid, or worry about accidentally interpreting an invalid string."
 
-## HashMaps
+## HashMaps `HashMap<K, V>`
+
+- If type implement Copy trait (e.g, `i32`, `f64`, `bool`) -> the values are copied into the HashMap
+- else, for owned values like String, the values are moved and the hash map will take ownership of those values
+- Each key in a HashMap can only have one value at the time, but you can overwrite it
+- Using the `entry` API, you can also check if a key is present in a Hashmap, insert it if not present, or update the values accordingly
+- You can also update based on an old value, but when iterating over the hashmap, make sure to dereference the value using the `*` to update a scoped variable, the values will be dropped once the loop is done, and only the updated HashMap will remain
+- PS: Attention to use the `mut` keyword when instantiating an HashMap. Otherwise, you will not be able to change it.
+- Side note: HashMaps in Rust have by default implemented a Hashing Function called SipHash(provide resistance against DoS attacks on hash tables), but you can specify another hasher using the `BuildHasher` trait.
+  
