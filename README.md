@@ -24,7 +24,9 @@ It's a WIP, so I'll keep adding more...
 
 `switch` - `match`
 
-`Array`  - `Vec`
+`Array`  - `Vec` - an array that can only store values of the same type
+
+`Object` - `HashMap`
 
 `Interface` - `Struct`
 
