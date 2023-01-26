@@ -1,8 +1,9 @@
+// use std::fs;
+// use std::io;
 use std::fs::File;
 use std::io::ErrorKind;
 use std::io::{self, Read};
-use std::fs;
-use std::io;
+use std::error::Error;
 
 
 //It's up to the code calling this function to decide what to do based on its Result value, ie, either a String or an Error
@@ -11,7 +12,7 @@ fn read_username_from_file() -> Result<String, io::Error> {
     let mut username_file = match username_file_result {
         Ok(file) => file,
         Err(e) => return Err(e),
-    }
+    };
     
     let mut username = String::new();
     
@@ -27,26 +28,32 @@ fn read_username_from_file() -> Result<String, io::Error> {
 
 //SAME FUNCTION but with ? Operator - Shortcut
 
-fn read_username_from_file_2() -> Result<string, io::Error> {
-    let mut username_file = File::open("hello.txt")?;
-    let mut username = String::new();
-    username_file.read_to_string(&mut username)?;
-    Ok(username)
+// fn read_username_from_file_2() -> Result<string, io::Error> {
+//     let mut username_file = File::open("hello.txt")?;
+//     let mut username = String::new();
+//     username_file.read_to_string(&mut username)?;
+//     Ok(username)
+// }
+
+// //even shorter
+// fn read_username_from_file3() -> Result<String, io::Error> {
+//     let mut username = String::new();
+//     File::open("hello.txt")?.read_to_string(&mut username)?;
+//     Ok(username)
+// }
+
+// //Even shorter!!! but without explaining the error
+// fn read_username_from_file4() -> Result<String, io::Error> {
+//     fs::read_to_string("hello.txt"); 
+// }
+
+fn last_char_of_first_line(text: &str) -> Option<char> {
+    text.lines().next()?.chars().last()
 }
 
-//even shorter
-fn read_username_from_file3() -> Result<String, io::Error> {
-    let mut username = String::new();
-    File::open("hello.txt")?.read_to_string(&mut username)?;
-    Ok(username)
-}
 
-//Even shorter!!! but without explaining the error
-fn read_username_from_file4() -> Result<String, io::Error> {
-    fs::read_to_string("hello.txt"); 
-}
-
-fn main() {
+//the Box<dyn Error> type is a trait object -- "any kind of error"
+fn main() -> Result<(), Box<dyn Error>> {
     // panic!("crash and burn");
     
     // let v = vec![1,2,3];
@@ -91,18 +98,23 @@ fn main() {
     //     }
     // });
     
-    
     //SHORTCUTS: unwrap() - return or show error
     
     // let greeting_file = File::open("hello.txt").unwrap(); //if ok the file is returned, if error the program calls a panic! macro
     
-    
     //SHORTCUTS: expect() - a little bit like a try/catch in JS that helps convey intent and track down the source of the panic
-    let greeting_file = File::open("hello.txt")
-        .expect("hello.txt should be included in this project, but couldn't be found");
+    // let greeting_file = File::open("hello.txt")
+    //     .expect("hello.txt should be included in this project, but couldn't be found");
         // prints: thread 'main' panicked at 'hello.txt should be included in this project, but couldn't be found: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:57:10
         // note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-        
+
+    // let greeting_file = File::open("hello.txt")?;
+    //^ cannot use the `?` operator in a function that returns `()`
+    
+    let greeting_file = File::open("hello.txt")?;
+    
+    Ok(())
+
 }
 
 

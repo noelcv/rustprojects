@@ -115,3 +115,7 @@ let greeting_file_result = File::open("hello.txt"); //returns a Result<T,E>
 ```
 
 ***Expect should be preferred over unwrap in production code as it gives better custom error messages for context***
+
+>"we’re only allowed to use the ? operator in a function that returns Result, Option, or another type that implements FromResidual."
+>***"When a main function returns a Result<(), E>, the executable will exit with a value of 0 if main returns Ok(()) and will exit with a nonzero value if main returns an Err value. "***
+>***"The main function may return any types that implement the std::process::Termination trait, which contains a function report that returns an ExitCode"***
