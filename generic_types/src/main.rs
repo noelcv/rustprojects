@@ -33,6 +33,18 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
     largest
 }
 
+//Generics in Structs
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+#[derive(Debug)]
+struct FlexiblePoint<T, U> {
+    x: T,
+    y: U,
+}
 
 fn main() {
     let numbers_list = vec![34, 50, 25, 100, 65];
@@ -69,4 +81,15 @@ fn main() {
     let char_list = vec![ 'y', 'm', 'a', 'q'];
     let result = largest(&char_list);
     println!("[with fn largest] The largest char is {}", result);
+    
+    let integer = Point { x: 5, y: 10 };
+    println!("integer {:?}", integer);
+    let float = Point { x: 1.5, y: 2.8 };
+    println!("float {:?}", float);
+    
+    // let mixed_types_wont_work = Point { x: 5, y: 9.8}; //^^^ expected integer, found floating-point number
+    // println!{"mixed_types_wont_work {:?}", mixed_types_wont_work};
+    
+    let mixed_types_can_work = FlexiblePoint { x: 5, y: 9.8};
+    println!("mixed_types_can_work with FlexiblePoint<T, U>, {:?}", mixed_types_can_work);
 }

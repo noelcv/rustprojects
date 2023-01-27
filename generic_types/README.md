@@ -30,4 +30,23 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
 }
 ```
 
+## In Structs
+
+Like in functions we can specify generic types, but if we want to use multiple types within a struct we need to specify it explicitly:
+
+```rust
+//Generics in Structs
+#[derive(Debug)]
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+#[derive(Debug)]
+struct FlexiblePoint<T, U> {
+    x: T,
+    y: U,
+}
+```
+
 ## In Enums
