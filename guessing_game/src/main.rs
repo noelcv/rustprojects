@@ -3,13 +3,35 @@ use rand::Rng; //run 'cargo doc --open' to read the docs on the crate
 use std::cmp::Ordering;
 
 
+pub struct Guess {
+    value: i32, //private field
+}
+
+impl Guess {
+    pub fn new(value: i32) -> Guess {
+        if value < 1 || value > 100 {
+            panic!("Guess value must be between 1 and 100, got {},", value);
+        }
+        Guess { value }
+    }
+    
+    //getter method because the value field of Guess is private
+    pub fn value(&self) -> i32 {
+        self.value
+    }
+}
+
+fn make_a_guess(input: &str) -> Guess {
+    let guess: i32 = input.trim().parse().expect("Please, type a number!");
+    Guess::new(guess)
+} 
+
 fn main() {
     println!("Guess the number!");
     
     let secret_number = rand::thread_rng().gen_range(1..=100);
     // we're commenting it out to not ruin the fun! :D
     // println!("The secret number is {secret_number}");
-    
     
     loop {
         println!("Please input your guess!!");
@@ -33,17 +55,31 @@ fn main() {
         //but we don't care about the specific error value
         //by switching expect for a match, we can handle the error instead of just having it crashing;
         
-        let guess: u32 = match guess.trim().parse(){
-            Ok(num) => num,
-            Err(_) => continue,
-        };
+        // let guess: u32 = match guess.trim().parse(){
+        //     Ok(num) => num,
+        //     Err(_) => continue,
+        // };
         
-        println!("You guessed:{guess}");
+        // println!("You guessed:{guess}");
+        
         
         //compare the guess with the reference to the secret number
         //like a switch, will break when it finds a suitable matching condition, unless it's a loop
         //like it it here, so we add a break statement, once the user guesses the numbrer
-        match guess.cmp(&secret_number) {
+        // match guess.cmp(&secret_number) {
+            //     Ordering::Less => println!("Too small!"),
+            //     Ordering::Greater => println!("Too big!"),
+            //     Ordering::Equal => {
+                //         println!("You win!");
+                //         break;
+                //     }
+                // }
+                
+        //now we're going to use a struct to encapsulate the guess
+        let filtered_guess = make_a_guess(&guess);
+        println!("You guessed:{}", filtered_guess.value);
+        
+        match filtered_guess.value.cmp(&secret_number) {
             Ordering::Less => println!("Too small!"),
             Ordering::Greater => println!("Too big!"),
             Ordering::Equal => {
