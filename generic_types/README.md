@@ -12,3 +12,22 @@ Eg. a function that finds the largest number in a list of numbers (i32) will wor
 
 With generics we can make it work on a slice of both `i32` or `char` values.
 
+## In Function Definitions
+
+There are no core methods in Rust. Without restrictions a generic type has no capabilities, so we need to define it in the function signature
+
+```rust
+//in this case, we want to compare values so we use PartialOrd trait
+fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
+    let mut largest = &list[0];
+    
+    for item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+    largest
+}
+```
+
+## In Enums
