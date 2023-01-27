@@ -119,3 +119,6 @@ let greeting_file_result = File::open("hello.txt"); //returns a Result<T,E>
 >"we’re only allowed to use the ? operator in a function that returns Result, Option, or another type that implements FromResidual."
 >***"When a main function returns a Result<(), E>, the executable will exit with a value of 0 if main returns Ok(()) and will exit with a nonzero value if main returns an Err value. "***
 >***"The main function may return any types that implement the std::process::Termination trait, which contains a function report that returns an ExitCode"***
+
+In a nutshell, use `panic!` when you want to decide on behalf of the caller that an error in unrecoverable.
+This situations might include violations of a function contract, or when exposure to repeated inputs may be a threat (e.g, DoS attacks) and use `Result<T,E>` when you want to let the caller decide what to do in case of failure. 

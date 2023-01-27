@@ -270,5 +270,4 @@ fn main() {
     }
     println!("sum: {}", sum); //prints: sum: 5
     
-
 }

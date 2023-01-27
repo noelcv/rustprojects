@@ -125,4 +125,3 @@ The standard library includes methods like `contains` and `replace`, that can he
 - You can also update based on an old value, but when iterating over the hashmap, make sure to dereference the value using the `*` to update a scoped variable, the values will be dropped once the loop is done, and only the updated HashMap will remain
 - PS: Attention to use the `mut` keyword when instantiating an HashMap. Otherwise, you will not be able to change it.
 - Side note: HashMaps in Rust have by default implemented a Hashing Function called SipHash(provide resistance against DoS attacks on hash tables), but you can specify another hasher using the `BuildHasher` trait.
-  
