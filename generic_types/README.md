@@ -50,3 +50,46 @@ struct FlexiblePoint<T, U> {
 ```
 
 ## In Enums
+
+```rust
+//from the standard Library - it allows to express the abstraction of an optional value,i.e, it might have something, or not.
+enum Option<T> {
+    Some(T), //Some will hold one value of type T
+    None, //will hold no value
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+Let's refactor this function from the enums match project. If you want to run the code, `cd enums_match && cargo run`.
+
+```rust
+fn plus_one(x: Option<i32>) -> Option<i32> {
+    //matches need to be exhaustive, i.e, cover all possible cases
+    match x {
+        None => None,
+        Some(i) => Some(i + 1), //the i is the value that is bound to the Some variant
+    }
+}
+
+//we can modify the function signature to adjust the necessary traits. By using the AddAssign<i32>, we'll allow to sum 1 to the value passed into Some if it has one.
+fn plus_one_generic<T: std::ops::AddAssign<i32> + Copy>(x: Option<T>) -> Option<T> {
+    match x {
+        None => None,
+        Some(mut i) => {
+            i += 1;
+            Some(i)
+        },
+    }
+}
+
+fn main() {
+    let five = Some(5);
+    let generic_six = plus_one_generic(five);
+    println!("Generic six is {:?}", generic_six);
+    //prints: Generic six is Some(6)
+}
+```

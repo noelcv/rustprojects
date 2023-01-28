@@ -46,6 +46,16 @@ struct FlexiblePoint<T, U> {
     y: U,
 }
 
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+
 fn main() {
     let numbers_list = vec![34, 50, 25, 100, 65];
     

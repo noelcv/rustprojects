@@ -79,6 +79,12 @@ fn main() {
     } else {
         count += 1;
     }
+    
+    //Testing our refactored plus_one_generic function:
+    
+    let five = Some(5);
+    let generic_six = plus_one_generic(five);
+    println!("Generic six is {:?}", generic_six);
 }
 
 fn value_in_cents(coin: Coin) -> u8 {
@@ -106,5 +112,15 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
         None => None,
         Some(i) => Some(i + 1), //the i is the value that is bound to the Some variant
+    }
+}
+
+fn plus_one_generic<T: std::ops::AddAssign<i32> + Copy>(x: Option<T>) -> Option<T> {
+    match x {
+        None => None,
+        Some(mut i) => {
+            i += 1;
+            Some(i)
+        },
     }
 }
