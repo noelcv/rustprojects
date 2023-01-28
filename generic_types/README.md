@@ -93,3 +93,60 @@ fn main() {
     //prints: Generic six is Some(6)
 }
 ```
+
+## In Methods
+
+when implementing generics on Methods, we have to put it right after the `impl` keyword to inform the compiler we'll be using methods with generics on a type defined by a struct.
+
+```rust
+impl<T> Point<T> {
+    //the method x will return a reference to the value in the field x of an instance of the struct Point
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+
+//here we're defining a constraint on the type for instances of Point<f32> only
+impl Point<f32> {
+    //this method will only be available for instance of Point<f32>
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt() //powi() is a method that raises a number to a specified power. Only available for f32 and f64
+    }
+}  
+```
+
+>**"You cannot simultaneously implement specific and generic methods of the same name this way. "**
+that's why we have to expand on the signature of functions and methods providing the capabilities required for particular operations that may not be available for all the types.
+>**"Rust does not have inheritance-like mechanisms for specializing methods as you might find in an object-oriented language,"** except for Traits
+
+```rust
+//"Generic Type parameters in a struct definition aren't always the same as those you use in that same struct's method signatures"
+#[derive(Debug)]
+struct MyPoint<X1, Y1> {
+    x: X1,
+    y: Y1,
+}
+
+//X1 and Y1 are mentioned as their part of the struct definition
+impl<X1, Y1> MyPoint<X1, Y1> {
+    //X2, Y2 are only relevant for this method
+    fn mixup<X2, Y2>(self, other: MyPoint<X2, Y2>) -> MyPoint<X1, Y2> {
+        MyPoint {
+            x: self.x,
+            y: other.y,
+        }
+    }
+}
+
+fn main() {
+    //METHODS
+    let p = Point {x: 5, y: 10};
+    println!("p.x = {}", p.x()); // here, the method x returns a reference to the value in the field x of the instance p of struct Point
+    
+    let p1 = MyPoint {x: 5, y: 10.4}; //x has as i32, y has a f64
+    let p2 = MyPoint {x: "Hello", y: 'c'}; // x has a string slice (&str), y has a char
+    let p3 = p1.mixup(p2); //p3 will have x as i32 any y as char because the method is being called on p1 (self) and p2 as (other)
+    println!("[With mixed types from MyPoint] p3.x = {}, p3.y = {}", p3.x, p3.y);
+    //prints: [With mixed types from MyPoint] p3.x = 5, p3.y = c
+}
+```
