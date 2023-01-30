@@ -28,6 +28,8 @@ It's a WIP, so I'll keep adding more...
 
 `Object` - `HashMap`
 
-`Interface` - `Struct`
+`Class` - `Struct`
+
+`Interface` - `Trait`
 
 `Enum` - `Enum`

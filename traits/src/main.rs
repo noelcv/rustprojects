@@ -1,6 +1,18 @@
+// pub trait Summary {
+//     fn summarize(&self) -> String {
+//         String::from("(Read more...)") //implementing default behaviour
+//     }
+// }
+
 pub trait Summary {
-    fn summarize(&self) -> String;
+    
+    fn summarize_author(&self) -> String;
+    
+    fn summarize(&self) -> String {
+        format!("Read more from {}", self.summarize_author())
+    }
 }
+
 
 pub struct NewsArticle {
     pub headline: String,
@@ -10,12 +22,17 @@ pub struct NewsArticle {
     pub source: String,
 }
 
-
 impl Summary for NewsArticle {
     fn summarize(&self) -> String {
-        format!("{}, by {} ({})", self.headline, self.author, self.source)
+        format!("{}, ({})", self.headline, self.source)
+    }
+    
+    fn summarize_author(&self) -> String {
+        format!("Written by {}", self.author)
     }
 }
+
+// impl Summary for NewsArticle {} //implementing default behaviour for NewsArticle
 
 pub struct Tweet {
     pub username: String,
@@ -27,6 +44,10 @@ pub struct Tweet {
 impl Summary for Tweet {
     fn summarize(&self) -> String {
         format!("{}: {}", self.username, self.content)
+    }
+    
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.username)
     }
 }
 
@@ -58,4 +79,5 @@ fn main() {
     };
     
     println!("[BREAKING NEWS] {}", article_one.summarize());
+    println!("{}", article_one.summarize_author());
 }

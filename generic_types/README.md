@@ -150,3 +150,6 @@ fn main() {
     //prints: [With mixed types from MyPoint] p3.x = 5, p3.y = c
 }
 ```
+
+Because of *Monomorphization* the generic code is turned into specific code **at compile time**, so there are no performance costs associated with using generic code to prevent duplication.
+
