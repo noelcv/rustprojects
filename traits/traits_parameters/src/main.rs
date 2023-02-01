@@ -1,4 +1,4 @@
-use std::fmt::{Display, Formatter, Result};
+use std::fmt::{Display, Formatter, Result, Debug};
 
 pub trait Summary {
     fn summarize(&self) -> String;
@@ -63,6 +63,21 @@ pub fn notify_with_plus_syntax<T: Summary + Display>(item: &T) {
     println!("[NOTIFY WITH + SYNTAX] {}", item.summarize());
 }
 
+//decluttering multiple trait signatures with `where` clauses
+//instead of this: 
+pub fn another_function_without_where_clauses<T: Display, U: Clone + Debug>(_t: &T, _u: &U) -> i32 {
+    33
+}
+
+pub fn another_function< T, U>(t: &T, u:&U) -> i32 
+where
+    T: Display + Clone,
+    U: Clone + Debug {
+    println!("t is: {}", t);
+    println!("u is: {:?}", u);
+    33    
+}
+
 pub struct Tweet {
     pub username: String,
     pub content: String,
@@ -75,7 +90,6 @@ impl Summary for Tweet {
         format!("{}: {}", self.username, self.content)
     }
 }
-
 
 fn main() {
     let tweet_one = Tweet {
@@ -116,4 +130,9 @@ fn main() {
     
     notify_with_several_traits(&article_one);
     notify_with_plus_syntax(&article_one);
+    
+    let x = 3;
+    let y = "hello";
+    let result = another_function(&x, &y);
+    println!("result: {}", result)
 }
