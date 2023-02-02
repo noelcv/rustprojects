@@ -91,6 +91,16 @@ impl Summary for Tweet {
     }
 }
 
+//We can also return types that implement traits
+fn returns_summarizable() -> impl Summary {
+    Tweet {
+        username: String::from("yoda"),
+        content: String::from("To be or not to be, question is."),
+        reply: true,
+        retweet: false,
+    }
+}
+
 fn main() {
     let tweet_one = Tweet {
         username: String::from("luke_skywalker"),
@@ -134,5 +144,8 @@ fn main() {
     let x = 3;
     let y = "hello";
     let result = another_function(&x, &y);
-    println!("result: {}", result)
+    println!("result: {}", result);
+    
+    let summarized = returns_summarizable();
+    println!("summarized: {}", summarized.summarize());
 }
