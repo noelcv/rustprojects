@@ -18,8 +18,6 @@ pub trait Summary {
             format!("{}, by {}({})", self.headline, self.author, self.source)
         }
     }
-    
-
 
 impl Display for NewsArticle {
     fn fmt (&self, f: &mut Formatter) -> Result {
@@ -100,6 +98,29 @@ fn returns_summarizable() -> impl Summary {
         retweet: false,
     }
 }
+
+// Implemnent methods conditionaly on a generic type that depends on a trait bound
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Pair<T> {
+    fn new(x: T, y: T) -> Self {
+        Self {x, y}
+    }
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y)
+        }
+    }
+}
+
 
 fn main() {
     let tweet_one = Tweet {
