@@ -121,7 +121,6 @@ impl<T: Display + PartialOrd> Pair<T> {
     }
 }
 
-
 fn main() {
     let tweet_one = Tweet {
         username: String::from("luke_skywalker"),
@@ -169,4 +168,10 @@ fn main() {
     
     let summarized = returns_summarizable();
     println!("summarized: {}", summarized.summarize());
+    
+    
+    //tessting that we can convert integers to string because integers implement the Display Trait from the standard library
+    //impl <T: Display> ToString for T {...} - blanket implementation
+    let s = 3.to_string();
+    println!("{}", s);
 }
