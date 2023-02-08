@@ -11,6 +11,11 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     }
 }
 
+//we annotate the lifetime of the struct so we can use it in the body of the struct
+struct ImportantExcerpt<'a> {
+    part: &'a str, //this field part will have a reference to a string slice, and an instance of this struct will leave as long as the reference does, and no longer than that.
+}
+
 fn main() {
     let r; //it's ok to declare a variable without initializing, so it leaves in this outer scope                                             ---+---- 'a
     // println!("r: {}", r); // but this will throw an error at compile time, because we're trying to use something that hasn't been defined     
@@ -43,9 +48,25 @@ fn main() {
     {
         let string4 = String::from("xyz");
         resulting_result = longest(string3.as_str(), string4.as_str()); // borrowed value does not live long enough
+        println!("The longest string is valid here in the inner scope {}", resulting_result); 
     }
-    // println!("The longest string is {}", resulting_result); 
+    // println!("The longest string WOULD NOT BE VALID HERE {}", resulting_result); 
     // would not compile because resulting_result goes out of scope 
     //as it's bound to the result of the longest.
+    
+    
+    let novel = String::from("Call me Bond, James Bond. Once upon a time...");
+    let first_sentence = novel.split('.')
+        .next()
+        .expect("Could not find a '.'");
+    
+
+    //this i is an instance of ImportantExcerpt,
+    let i = ImportantExcerpt {
+        part: first_sentence, 
+    };
+    println!("novel: {}", novel);
+    println!("i.part: {}", i.part);
+    
     
 } //end of scope of string3
