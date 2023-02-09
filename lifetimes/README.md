@@ -38,3 +38,5 @@ fn main() {
 ```
 
 This exercise of comparing the lifetimes is performed by the borrow checker at compile time.
+
+>**"Lifetimes on function or method parameters are called input lifetimes, and lifetimes on return values are called output lifetimes."**

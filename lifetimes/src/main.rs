@@ -16,6 +16,21 @@ struct ImportantExcerpt<'a> {
     part: &'a str, //this field part will have a reference to a string slice, and an instance of this struct will leave as long as the reference does, and no longer than that.
 }
 
+//this wouldn't compile in previous versions, it needed explicit annotations of lifetimes like this:
+//fn first_word<'a>(s: &'a str) -> &'a str {}
+//this would result in entering the same lifetime annotations reppeatidely, so we can use the elisions rules
+//to make the code more concise as the borrow checker can infer the lifetimes under these rules. 
+fn first_word(s: &str) -> &str {
+    let bytes = s.as_bytes();
+    
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+    &s[..]
+}
+
 fn main() {
     let r; //it's ok to declare a variable without initializing, so it leaves in this outer scope                                             ---+---- 'a
     // println!("r: {}", r); // but this will throw an error at compile time, because we're trying to use something that hasn't been defined     
@@ -27,7 +42,6 @@ fn main() {
     } // `x` dropped here while still borrowed
     
     // println!("r: {}", r); //   ^^ borrowed value does not live long enough
-    // 
     
     let r = 2;
     println!("r: {}", r); //r: 2
@@ -68,5 +82,8 @@ fn main() {
     println!("novel: {}", novel);
     println!("i.part: {}", i.part);
     
+    
+    let first_wrd = first_word(&novel);
+    println!("first word: {}", first_wrd);
     
 } //end of scope of string3
