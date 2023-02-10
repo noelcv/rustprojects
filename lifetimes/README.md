@@ -40,3 +40,26 @@ fn main() {
 This exercise of comparing the lifetimes is performed by the borrow checker at compile time.
 
 >**"Lifetimes on function or method parameters are called input lifetimes, and lifetimes on return values are called output lifetimes."**
+
+1. Lifetime Parameters - Input
+2. Output Lifetimes
+3. Output Lifetimes
+
+These rules apply to `fn` and `impl` block. If the compiler cannot satisfy one of these rules, the code won't compile.
+
+1. The compiler assigns a lifetime to each parameter that's a reference:
+
+   ```rust
+   fn foo<'a>(x: &'a i32) {...}
+   
+   fn bar<'a, 'b>(x: &'a i32, y: &'b i32) {}
+   ```
+
+2. "If there is only one input lifetime parameter, that lifetime is assigned to all output lifetime parameters"
+
+   ```rust
+   fn foo<'a>(x: &'a i32) -> &'a i32 {...}
+   ```
+
+3. When having multiple parameters but one of them is `&self` or `&mut self` (methods), "the lifetime of `&self` is assigned to all output lifetime parameters".
+4. 
