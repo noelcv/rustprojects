@@ -16,6 +16,21 @@ struct ImportantExcerpt<'a> {
     part: &'a str, //this field part will have a reference to a string slice, and an instance of this struct will leave as long as the reference does, and no longer than that.
 }
 
+//although we annotate the impl and its use after the struct name,  we don't need to annotate the lifetime of self reference because of the first rule.
+impl<'a> ImportantExcerpt<'a> {
+    fn level(&self) -> i32 {
+        3
+    }
+}
+
+impl<'a> ImportantExcerpt<'a> {
+    //in this case, we have multiple inputs, so the lifetime of &self is passed to the return type
+    fn announce_and_return_part(&self, announcement: &str) -> &str {
+        println!("Attention please: {}", announcement);
+        self.part
+    }
+}
+
 //this wouldn't compile in previous versions, it needed explicit annotations of lifetimes like this:
 //fn first_word<'a>(s: &'a str) -> &'a str {}
 //this would result in entering the same lifetime annotations reppeatidely, so we can use the elisions rules
