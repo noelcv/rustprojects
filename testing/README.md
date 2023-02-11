@@ -18,7 +18,7 @@ Basic principles as in any other language:
 ## Things to note
 
 1. `#[test]` annotates a function as a test;
-2. `assert_eq!` is a testing macro
+2. `assert!` is a testing macro to test for truthiness
 3. `cargo test` will run the tests
 4. We can run a subset of the tests by filtering
 5. `Doc-tests` is for helping having documentation of the results
@@ -88,6 +88,42 @@ failures:
 test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
 error: test failed, to rerun pass `--lib`
+```
+
+## `assert!`
+
+See the full example `cd adder/src/lib.rs`. 
+
+```rust
+ #[test]
+    fn larger_can_hold_smaller() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+        
+        assert!(larger.can_hold(&smaller));
+    }
+    
+    #[test]
+    fn smaller_cannot_hold_larger() {
+        let larger = Rectangle {
+            width: 8,
+            height: 7,
+        };
+        
+        let smaller = Rectangle {
+            width: 5,
+            height: 1,
+        };
+        //we expect it to be false, so we use the bang operator to negate the value inside the assertion
+        assert!(!smaller.can_hold(&larger));
+    }
 ```
 
 ## Additional Readings
