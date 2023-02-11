@@ -73,3 +73,31 @@ Needs to be used sparely.
 ```rust
 let some_string_literal: &'static str = "I have a static lifetime";
 ```
+
+## Wrap it up
+
+```rust
+use std::fmt::Display;
+
+//putting it all together: Generic Type Parameters, Trait Bounds and Lifetimes;
+//this function will print the announcement and return the longest string slice from either x or y
+//<'a, T> - lifetime is a kind of generic, so we pass it within angle brackets after the function name
+fn longest_with_an_announcement<'a, T> (x: &'a str, y: &'a str, ann: T) -> &'a str
+where
+    T: Display, //the where clause specifies that the generic type `T` must implement the `Display` trait...
+    {
+        println!("Announcement! {}", ann); //...because it will be needed here to print the announcement within the {}
+        if x.len() > y.len() {
+            x
+        } else {
+            y
+        }
+    }
+    
+fn main() {
+  let wrap_it_up = longest_with_an_announcement("This is the X string slice", "This is the Y string slice - let's make it longer", "This is an announcement in the form of a string slice, which implements the Display trait and therefore can be printed in curly braces!"); 
+  //prints: Announcement! This is an announcement in the form of a string slice, which implements the Display trait and therefore can be printed in curly braces! 
+  println!("wrap_it_up should be the longest string slice from the previous call: {}", wrap_it_up);
+  //prints: wrap_it_up should be the longest string slice from the previous call: This is the Y string slice - let's make it longer
+}
+```

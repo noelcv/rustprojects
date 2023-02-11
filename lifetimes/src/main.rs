@@ -1,3 +1,6 @@
+use std::fmt::Display;
+
+
 //We need to use generic lifetimes parameters, because neither us nor the borrow checker
 //know in advance how long the references will be valid for.
 // we're basically saying: the function takes two references to string slices and the
@@ -46,6 +49,21 @@ fn first_word(s: &str) -> &str {
     &s[..]
 }
 
+//putting it all together: Generic Type Parameters, Trait Bounds and Lifetimes;
+//this function will print the announcement and return the longest string slice from either x or y
+//<'a, T> - lifetime is a kind of generic, so we pass it within angle brackets after the function name
+fn longest_with_an_announcement<'a, T> (x: &'a str, y: &'a str, ann: T,) -> &'a str
+where
+    T: Display, //the where clause specifies that the generic type `T` must implement the `Display` trait...
+    {
+        println!("Announcement! {}", ann); //...because it will be needed here to print the announcement within the {}
+        if x.len() > y.len() {
+            x
+        } else {
+            y
+        }
+    }
+
 fn main() {
     let r; //it's ok to declare a variable without initializing, so it leaves in this outer scope                                             ---+---- 'a
     // println!("r: {}", r); // but this will throw an error at compile time, because we're trying to use something that hasn't been defined     
@@ -54,6 +72,7 @@ fn main() {
     {
         let x = 5; //the scope of x is limited to this block
         r = &x;
+        println!("inner `r` is valid here: {}", r);
     } // `x` dropped here while still borrowed
     
     // println!("r: {}", r); //   ^^ borrowed value does not live long enough
@@ -107,4 +126,9 @@ fn main() {
     //this will live as long as the program lives.
     let some_string_literal: &'static str = "I have a static lifetime";
     println!("some_string_literal: {}", some_string_literal);
+    
+    //WRAP IT UP
+    let wrap_it_up = longest_with_an_announcement("This is the X string slice", "This is the Y string slice - let's make it longer", "This is an announcement in the form of a string slice, which implements the Display trait and therefore can be printed in curly braces!");
+    println!("wrap_it_up should be the longest string slice from the previous call: {}", wrap_it_up);
+
 } //end of scope of string3
