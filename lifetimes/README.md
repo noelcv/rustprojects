@@ -63,3 +63,13 @@ These rules apply to `fn` and `impl` block. If the compiler cannot satisfy one o
 
 3. When having multiple parameters but one of them is `&self` or `&mut self` (methods), "the lifetime of `&self` is assigned to all output lifetime parameters".
 
+
+
+## Static Lifetimes
+
+A special annotation that binds the lifetime of a data structure to the duration of the program, and hence makes it always available.
+Needs to be used sparely.
+
+```rust
+let some_string_literal: &'static str = "I have a static lifetime";
+```

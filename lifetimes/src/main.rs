@@ -101,4 +101,10 @@ fn main() {
     let first_wrd = first_word(&novel);
     println!("first word: {}", first_wrd);
     
+    println!("i.level(): {}", i.level());
+    println!("i.announce_and_return_part(): {}", i.announce_and_return_part("This is a really important announcement, so pay attention"));
+    
+    //this will live as long as the program lives.
+    let some_string_literal: &'static str = "I have a static lifetime";
+    println!("some_string_literal: {}", some_string_literal);
 } //end of scope of string3
