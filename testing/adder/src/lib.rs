@@ -2,7 +2,11 @@ pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
-#[derive(Debug)]
+pub fn add_two(a: i32) -> i32 {
+    a + 2
+}
+
+#[derive(PartialEq, Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -67,5 +71,26 @@ mod tests {
         };
         //we expect it to be false, so we use the bang operator to negate the value inside the assertion
         assert!(!smaller.can_hold(&larger));
+    }
+    
+    #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(2));
+    }
+    
+    
+    #[test]
+    fn test_ne_rect() {
+        let rect1 = Rectangle {
+            width: 9,
+            height:5,
+        };
+        
+        let rect2 = Rectangle {
+            width:8,
+            height:4,
+        };
+        
+        assert_ne!(rect1, rect2);
     }
 }
