@@ -22,6 +22,9 @@ Basic principles as in any other language:
 3. `cargo test` will run the tests
 4. We can run a subset of the tests by filtering
 5. `Doc-tests` is for helping having documentation of the results
+6. We can add custom failure messages to document the meaning of an assertion
+
+By introducing reliable tests, if we introduce bugs, it will be easier to spot them.
 
 ```rust
 pub fn add(left: usize, right: usize) -> usize {
@@ -92,7 +95,7 @@ error: test failed, to rerun pass `--lib`
 
 ## `assert!`
 
-See the full example `cd adder/src/lib.rs`. 
+See the full example `cd adder/src/lib.rs`.
 
 ```rust
  #[test]
@@ -125,6 +128,54 @@ See the full example `cd adder/src/lib.rs`.
         assert!(!smaller.can_hold(&larger));
     }
 ```
+
+## `assert_eq!`and `assert_ne!`
+
+Two very convenient methods of testing for equality or inequality.
+the cool thing is that if it fails, it will show the mismatched results in the logs, which gives us a good starting point when debugging.
+
+```rust
+ #[test]
+    fn it_adds_two() {
+        assert_eq!(4, add_two(3));
+    }
+```
+
+```bash
+  ---- tests::it_adds_two stdout ----
+thread 'tests::it_adds_two' panicked at 'assertion failed: `(left == right)`
+left: `4`,
+right: `5`', src/lib.rs:78:9
+
+```
+
+***Important: When implementing structs, we need to extend the directive to include PartialEq, if we are testing for equality or inequality***
+
+```rust
+#[derive(PartialEq, Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+//
+#[test]
+    fn test_ne_rect() {
+        let rect1 = Rectangle {
+            width: 9,
+            height:5,
+        };
+        
+        let rect2 = Rectangle {
+            width:8,
+            height:4,
+        };
+        
+        assert_ne!(rect1, rect2); //the test succeeds if the params are not equal
+    }
+```
+
+## Custom Failure Messages
 
 ## Additional Readings
 

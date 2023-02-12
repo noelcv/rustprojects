@@ -6,6 +6,10 @@ pub fn add_two(a: i32) -> i32 {
     a + 2
 }
 
+pub fn greeting(name: &str) -> String {
+    format!("Hello, {}", name)
+}
+
 #[derive(PartialEq, Debug)]
 struct Rectangle {
     width: u32,
@@ -93,4 +97,27 @@ mod tests {
         
         assert_ne!(rect1, rect2);
     }
+    
+    #[test]
+    fn greeting_contains_name(){
+        let result = greeting("Carol");
+        assert!(result.contains("Carol"));
+        // assert!(result.contains("Caroll"));
+//---- tests::greeting_contains_name stdout ----
+//thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\"Caroll\")', src/lib.rs:104:9
+//note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+    }
+    
+    #[test]
+    fn greeting_contains_name_custom() {
+        let result = greeting("Katia");
+        assert!(
+            result.contains("Carol"),
+            "Greeting did not contain name, value was '{}'",
+            result
+        )
+    }  
+//   ---- tests::greeting_contains_name_custom stdout ----
+//thread 'tests::greeting_contains_name_custom' panicked at 'Greeting did not contain name, value was 'Hello, Katia'', src/lib.rs:114:9
+    
 }
