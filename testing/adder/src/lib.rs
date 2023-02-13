@@ -33,6 +33,15 @@ mod tests {
     }
     
     #[test]
+    fn it_works_complete() -> Result<(), String> {
+        if 2 + 3 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four! Blasphemy!"))
+        }
+    }
+    
+    #[test]
     fn exploration() {
         assert_eq!(2 + 2, 4)
     }

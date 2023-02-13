@@ -244,7 +244,37 @@ mod tests {
 }
 ```
 
+## `Result<T, E>`
 
+```rust
+    #[test]
+    fn it_works_complete() -> Result<(), String> {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four! Blasphemy!"))
+        }
+    }
+
+//test tests::it_works_complete ... ok
+
+
+  #[test]
+    fn it_works_complete() -> Result<(), String> {
+        if 2 + 2 == 5 {
+            Ok(())
+        } else {
+            Err(String::from("two plus two does not equal four! Blasphemy!"))
+        }
+    }
+
+//test tests::it_works_complete ... FAILED
+//---- tests::it_works_complete stdout ----
+//Error: "two plus two does not equal four! Blasphemy!"
+
+```
+
+When we use `Result<T,E>`, we cannot use should_panic. We can use the `assert!(value.is_err())`
 
 ## Additional Readings
 
