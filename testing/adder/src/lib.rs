@@ -118,6 +118,5 @@ mod tests {
         )
     }  
 //   ---- tests::greeting_contains_name_custom stdout ----
-//thread 'tests::greeting_contains_name_custom' panicked at 'Greeting did not contain name, value was 'Hello, Katia'', src/lib.rs:114:9
-    
+//thread 'tests::greeting_contains_name_custom' panicked at 'Greeting did not contain name, value was 'Hello, Katia'', src/lib.rs:114:9    
 }
