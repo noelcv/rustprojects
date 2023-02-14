@@ -274,7 +274,19 @@ mod tests {
 
 ```
 
-When we use `Result<T,E>`, we cannot use should_panic. We can use the `assert!(value.is_err())`
+When we use `Result<T, E>`, we cannot use should_panic. We can use the `assert!(value.is_err())`
+
+## Controlling How Tests Run
+
+`cargo run`compiles the code and runs the binary
+`cargo test`compiles the code in test mode and runs that test binary
+By default it happens in parallel
+
+To override the default behavior, we can separate the command with `--`
+
+`cargo test -- --help` to the left of the separator are commands to pass to cargo test, and to the right the ones to pass to the resulting test binary.
+
+`cargo test -- --test-threads=1` will make the tests run in sequence, instead of in parallel. It's a good idea to make the tests totally independent from each other, though.
 
 ## Additional Readings
 
