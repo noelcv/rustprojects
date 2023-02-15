@@ -317,6 +317,34 @@ test tests::it_adds_two ... ok
 test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
 ```
 
+### Ignoring some tests
+
+Just annotate the test with `#[ignore]`and it will be skipped
+
+```rust
+ #[test]
+ #[ignore] 
+ fn add_three_and_two() {
+    assert_eq!(5, add_two(3));
+}
+```
+
+```bash
+   Finished test [unoptimized + debuginfo] target(s) in 1.28s
+     Running unittests src/lib.rs (target/debug/deps/adder-d0b5831847bf2ea7)
+
+running 3 tests
+test tests::add_three_and_two ... ignored
+test tests::it_adds_two ... ok
+test tests::add_two_and_two ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 11 filtered out; finished in 0.00s
+```
+
+Use `cargo test -- --ignored` to run only the tests flagged with #[ignore]
+
+To run all, `cargo test -- --include-ignored`
+
 ## Additional Readings
 
 - [Benchmark Testing - (available only in Nightly Rust)](https://doc.rust-lang.org/unstable-book/library-features/test.html)

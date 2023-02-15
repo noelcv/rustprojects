@@ -135,6 +135,7 @@ mod tests {
     }
     
     #[test]
+    #[ignore] 
     fn add_three_and_two() {
         assert_eq!(5, add_two(3));
     }
