@@ -128,4 +128,20 @@ mod tests {
     }  
 //   ---- tests::greeting_contains_name_custom stdout ----
 //thread 'tests::greeting_contains_name_custom' panicked at 'Greeting did not contain name, value was 'Hello, Katia'', src/lib.rs:114:9    
+    
+    #[test]
+    fn add_two_and_two() {
+        assert_eq!(4, add_two(2));
+    }
+    
+    #[test]
+    fn add_three_and_two() {
+        assert_eq!(5, add_two(3));
+    }
+    
+    #[test]
+    fn one_hundred_and_two() {
+        assert_eq!(102, add_two(100));
+    }
+
 }

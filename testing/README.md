@@ -288,6 +288,35 @@ To override the default behavior, we can separate the command with `--`
 
 `cargo test -- --test-threads=1` will make the tests run in sequence, instead of in parallel. It's a good idea to make the tests totally independent from each other, though.
 
+`cargo test -- --show-output` logs the values
+
+### Running single tests and Filtering to Run Multiple Tests
+
+Never been easier: `cargo test add_two_and_two`
+Just add the function name, the remaining tests in the module are filtered out.
+
+```bash
+running 1 test
+test tests::add_two_and_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+```
+
+Although we can't specify multiple tests to `cargo test` we can trick it like this:
+`cargo test add` will run all the tests that contain `add` in the test function name:
+
+```bash
+    Finished test [unoptimized + debuginfo] target(s) in 0.85s
+     Running unittests src/lib.rs (target/debug/deps/adder-d0b5831847bf2ea7)
+
+running 3 tests
+test tests::add_three_and_two ... ok
+test tests::add_two_and_two ... ok
+test tests::it_adds_two ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+```
+
 ## Additional Readings
 
 - [Benchmark Testing - (available only in Nightly Rust)](https://doc.rust-lang.org/unstable-book/library-features/test.html)
