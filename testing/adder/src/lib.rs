@@ -32,29 +32,29 @@ mod tests {
         assert_eq!(result, 4);
     }
     
-    #[test]
-    fn it_works_complete() -> Result<(), String> {
-        if 2 + 3 == 4 {
-            Ok(())
-        } else {
-            Err(String::from("two plus two does not equal four! Blasphemy!"))
-        }
-    }
+    // #[test]
+    // fn it_works_complete() -> Result<(), String> {
+    //     if 2 + 3 == 4 {
+    //         Ok(())
+    //     } else {
+    //         Err(String::from("two plus two does not equal four! Blasphemy!"))
+    //     }
+    // }
     
     #[test]
     fn exploration() {
         assert_eq!(2 + 2, 4)
     }
     
-    #[test]
-    fn it_fails_for_sure() {
-        assert_eq!(2 + 2, 5)
-    }
+    // #[test]
+    // fn it_fails_for_sure() {
+    //     assert_eq!(2 + 2, 5)
+    // }
     
-    #[test]
-    fn it_fails() {
-        panic!("Make this test fail")
-    }
+    // #[test]
+    // fn it_fails() {
+    //     panic!("Make this test fail")
+    // }
     
     #[test]
     fn larger_can_hold_smaller() {
@@ -119,7 +119,7 @@ mod tests {
     
     #[test]
     fn greeting_contains_name_custom() {
-        let result = greeting("Katia");
+        let result = greeting("Carol");
         assert!(
             result.contains("Carol"),
             "Greeting did not contain name, value was '{}'",

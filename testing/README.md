@@ -345,6 +345,93 @@ Use `cargo test -- --ignored` to run only the tests flagged with #[ignore]
 
 To run all, `cargo test -- --include-ignored`
 
+## Test Organization
+
+### Unit Tests
+
+Create a module `tests` annotated with #[cfg(test)] for each file in the **src** directory to tell the Rust compiler to run it only when you use `cargo test`and not `cargo build`
+
+```rust
+pub fn add_two(a: i32) -> i32 {
+    internal_adder(a, 2)
+}
+
+//private function 
+fn internal_adder(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*; //to take it into scope
+
+    #[test]
+    fn internal() {
+        assert_eq!(4, internal_adder(2, 2));
+    }
+}
+
+```
+
+### Integration Tests
+
+
+1. Create a folder `tests` This directory becomes special and you don't need to annotate it with #[cfg(test)].
+
+```rust
+use adder;
+
+#[test]
+fn it_adds_two() {
+  assert_eq!(4, adder::add_two(2));
+}
+```
+
+`$ cargo test` will run the cascade of test sections:
+
+1. Unit tests
+2. Integration tests
+3. Doc tests
+
+If any fails, the next doesn't run!!!
+
+```bash
+Finished test [unoptimized + debuginfo] target(s) in 0.51s
+     Running unittests src/lib.rs (target/debug/deps/adder-d0b5831847bf2ea7)
+
+running 11 tests
+test tests::add_three_and_two ... ignored
+test tests::add_two_and_two ... ok
+test tests::exploration ... ok
+test tests::greeting_contains_name ... ok
+test tests::greeting_contains_name_custom ... ok
+test tests::it_adds_two ... ok
+test tests::it_works ... ok
+test tests::larger_can_hold_smaller ... ok
+test tests::one_hundred_and_two ... ok
+test tests::smaller_cannot_hold_larger ... ok
+test tests::test_ne_rect ... ok
+
+test result: ok. 10 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/integration_test.rs (target/debug/deps/integration_test-92aefea4feb54615)
+
+running 1 test
+test it_adds_two ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests adder
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+
+To run just the integration test, run `cargo test --test integration_test` or whatever the name of your file will be.
+
+Go to `cd adder` for a full implementation.
+
 ## Additional Readings
 
 - [Benchmark Testing - (available only in Nightly Rust)](https://doc.rust-lang.org/unstable-book/library-features/test.html)
