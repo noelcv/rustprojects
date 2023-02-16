@@ -432,6 +432,10 @@ To run just the integration test, run `cargo test --test integration_test` or wh
 
 Go to `cd adder` for a full implementation.
 
+### Splitting code
+
+Shared logic goes into tests/common/mod.rs
+
 ## Additional Readings
 
 - [Benchmark Testing - (available only in Nightly Rust)](https://doc.rust-lang.org/unstable-book/library-features/test.html)
