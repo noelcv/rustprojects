@@ -45,9 +45,14 @@ To an admiring bog!
 Let's split the code to make it modular and easier to test, instead of having main parsing arguments and reading files. 
 Group configuration variables: tuple -> struct 
 
-- by adding query and file path to struct, we convey meaning how both elements relate
 - we're using the clone method right now, but it is slightly inneficient because we're allocating an entire copy of that data in memory, instead of borrowing a reference
 - we gain simplicity and clarity because we don't have to manage the lifetimes of the data, but it has a runtime cost - (here is not significant though)
+- by adding query and file path to struct, we convey meaning how both elements relate
+
+- Convert `parse_config` into an associated function `new` of the Config struct - idiomatic approach. Note that an associated function doesn't have access to the internal state of instances of a type, but are rather called **on the type itself**.
+
+
+
 Create meaningful error handling
 
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
