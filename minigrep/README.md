@@ -39,3 +39,14 @@ How public, like a frog
 To tell your name the livelong day
 To an admiring bog!
 ```
+
+## Separation of concerns
+
+Let's split the code to make it modular and easier to test, instead of having main parsing arguments and reading files. 
+Group configuration variables
+Create meaningful error handling
+
+[Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
+
+- main.rs - will call the CLI logic with args / setup configuration / call a run function in lib rs / error handling
+- lib.rs - will handle the logic
