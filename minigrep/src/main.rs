@@ -11,13 +11,19 @@ fn main() {
         process::exit(1) // signaling that the the program has exited with an error (non-zero exit code)
     });
     
-    println!("Searching for {}", config.query);
-    println!("In file {}", config.file_path);
+    println!("Searching for '{}'", config.query);
+    println!("In file '{}'", config.file_path);
+    
+    run(config);
+}
 
+
+//contains the logic of the program from read the file, onwards - we'll expand it later
+fn run(config: Config) {
     let contents = fs::read_to_string(config.file_path)
         .expect("Should have been able to read the file"); //returns a std::io::Result<String>
 
-    println!("With text: \n{contents}");
+    println!("With text: \n\n{contents}");
 }
 
 #[derive(Debug)]

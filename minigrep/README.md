@@ -92,6 +92,11 @@ WAY BETTER!!!
 Problem parsing arguments: Not enough arguments
 ```
 
+### Back to code splitting
+
+- Extract the logic in main to a function run to hold the logic for configuration and error handling
+
+
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
 
 - main.rs - will call the CLI logic with args / setup configuration / call a run function in lib rs / error handling
