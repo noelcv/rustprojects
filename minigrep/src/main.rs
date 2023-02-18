@@ -1,6 +1,7 @@
 use std::env; //bring it to scope so we can use args()
 use std::fs; //to handle file system operations
 use std::process; //will be used to exit the program if there's an error
+use std::error::Error; //will be used to return errors from the run function
 
 fn main() {
     let args: Vec<String> = env::args().collect(); //turn the iterator into a collection of values, in this case a Vector of strings
@@ -14,16 +15,18 @@ fn main() {
     println!("Searching for '{}'", config.query);
     println!("In file '{}'", config.file_path);
     
-    run(config);
+    //As the success return value of run is (), there is nothing to unwrap so we're only interested in handling the error with if let Err(e)
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    }
 }
 
-
-//contains the logic of the program from read the file, onwards - we'll expand it later
-fn run(config: Config) {
-    let contents = fs::read_to_string(config.file_path)
-        .expect("Should have been able to read the file"); //returns a std::io::Result<String>
-
+//contains the logic of the program from read the file, onwards
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?; // the ? will return the error value instead of panicking (in case it fails to read the file)
     println!("With text: \n\n{contents}");
+    Ok(()) //indicates success and the unit type () indicates that we don't have a value to return
 }
 
 #[derive(Debug)]

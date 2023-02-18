@@ -95,7 +95,10 @@ Problem parsing arguments: Not enough arguments
 ### Back to code splitting
 
 - Extract the logic in main to a function run to hold the logic for configuration and error handling
-
+- Refactor error handling at fn run -> bring `std::error::Error` into scope and use the trait object `Box<dyn Error>` to updated the return type to `Result<(), Box<dyn Error>>` - the function will return a type that implements the Error trait, dyn stands for dynamic, should we need to return error values of different types for different errors
+- replace `expect` for `?` to return the error in case of error instead of panicking
+- In case of success, Ok(()) is the idiomatic way of indicating we're calling the function for its side effects (e.g. printing to the console) without having a returning value.
+- use `if let Err(e)`to handle the error, if there is an error. Again, the success of run() has no return value, so here the priority is to handle the error.
 
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
 
