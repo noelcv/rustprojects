@@ -24,7 +24,11 @@ impl Config {
 //contains the logic of the program from read the file, onwards
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
   let contents = fs::read_to_string(config.file_path)?; // the ? will return the error value instead of panicking (in case it fails to read the file)
-  println!("With text: \n\n{contents}");
+  
+  for line in search(&config.query, &contents) {
+    println!("{line}");
+  }
+  
   Ok(()) //indicates success and the unit type () indicates that we don't have a value to return
 }
 
