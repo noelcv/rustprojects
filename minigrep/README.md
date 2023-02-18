@@ -51,9 +51,29 @@ Group configuration variables: tuple -> struct
 
 - Convert `parse_config` into an associated function `new` of the Config struct - idiomatic approach. Note that an associated function doesn't have access to the internal state of instances of a type, but are rather called **on the type itself**.
 
-
+## Error Handling
 
 Create meaningful error handling
+
+```bash
+➜  minigrep git:(main) cargo run 
+    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target/debug/minigrep`
+thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', src/main.rs:26:21
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
+Having the code panicking if the len of args is lower than 3 is better than nothing, and provides context to developers, but we can do better...
+
+```bash
+➜  minigrep git:(main) ✗ cargo run
+   Compiling minigrep v0.1.0
+    Finished dev [unoptimized + debuginfo] target(s) in 0.68s
+     Running `target/debug/minigrep`
+thread 'main' panicked at 'Not enough arguments', src/main.rs:27:13
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+```
+
 
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
 
