@@ -116,5 +116,28 @@ With such a modular code, it will be easier to test it.
 > 3.Refactor the code you just added or changed and make sure the tests continue to pass.
 > 4.Repeat from step 1!"
 
+
+## Environment variables
+
+See the code implementation for details.
+
+```bash
+➜  minigrep git:(main) ✗ IGNORE_CASE=1 cargo run -- to poem.txt
+   Compiling minigrep v0.1.0 (/Users/noel/rustprojects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 1.42s
+     Running `target/debug/minigrep to poem.txt`
+Insensitive search
+Are you nobody, too?
+How dreary to be somebody!
+To tell your name the livelong day
+To an admiring bog!
+➜  minigrep git:(main) ✗ cargo run -- to  poem.txt             
+    Finished dev [unoptimized + debuginfo] target(s) in 0.00s
+     Running `target/debug/minigrep to poem.txt`
+Sensitive search
+Are you nobody, too?
+How dreary to be somebody!
+```
+
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
 [Test-Driven Development](https://rust-book.cs.brown.edu/ch12-04-testing-the-librarys-functionality.html)
