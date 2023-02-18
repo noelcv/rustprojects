@@ -43,7 +43,11 @@ To an admiring bog!
 ## Separation of concerns
 
 Let's split the code to make it modular and easier to test, instead of having main parsing arguments and reading files. 
-Group configuration variables
+Group configuration variables: tuple -> struct 
+
+- by adding query and file path to struct, we convey meaning how both elements relate
+- we're using the clone method right now, but it is slightly inneficient because we're allocating an entire copy of that data in memory, instead of borrowing a reference
+- we gain simplicity and clarity because we don't have to manage the lifetimes of the data, but it has a runtime cost - (here is not significant though)
 Create meaningful error handling
 
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
