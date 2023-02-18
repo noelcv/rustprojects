@@ -109,4 +109,12 @@ Note: remember to make the API public, and bring it to the binary's crate scope 
 
 With such a modular code, it will be easier to test it.
 
+## Test-Driven Development
+
+>"1. Write a test that fails and run it to make sure it fails for the reason you expect.
+> 2.Write or modify just enough code to make the new test pass.
+> 3.Refactor the code you just added or changed and make sure the tests continue to pass.
+> 4.Repeat from step 1!"
+
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
+[Test-Driven Development](https://rust-book.cs.brown.edu/ch12-04-testing-the-librarys-functionality.html)

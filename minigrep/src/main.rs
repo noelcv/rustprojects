@@ -12,9 +12,6 @@ fn main() {
         process::exit(1) // signaling that the the program has exited with an error (non-zero exit code)
     });
     
-    println!("Searching for '{}'", config.query);
-    println!("In file '{}'", config.file_path);
-    
     //As the success return value of run is (), there is nothing to unwrap so we're only interested in handling the error with if let Err(e)
     if let Err(e) = minigrep::run(config) {
         println!("Application error: {e}");
