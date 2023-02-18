@@ -74,6 +74,23 @@ thread 'main' panicked at 'Not enough arguments', src/main.rs:27:13
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
+### Returning a Result instead of panic!
+
+- Return a Result with a Config in case of success, and an error description in case of failure
+- Change new -> build ()
+- Refactored main to handle the Result with the unwrap_or_else method from the std library to define custom error message.
+  In case it's Ok, it will return the Result
+  In case it's Err, the method calls the code in the closure (`|err|` - vertical pipes), in this case will exit the program and use the err value at runtime.
+
+WAY BETTER!!!
+
+```bash
+➜  minigrep git:(main) ✗ cargo run
+   Compiling minigrep v0.1.0 (/Users/noel/rustprojects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.80s
+     Running `target/debug/minigrep`
+Problem parsing arguments: Not enough arguments
+```
 
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
 
