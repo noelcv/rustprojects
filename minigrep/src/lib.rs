@@ -28,8 +28,23 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
   Ok(()) //indicates success and the unit type () indicates that we don't have a value to return
 }
 
+
+//we connect the signature lifetime to the lifetime of the contents argument, as we're returning a slice of the contents
+//containing the lines that match the query and not the other way around
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-  vec![]
+    //requirements:
+    let mut results = Vec::new();
+    //Iterate through each line of the contents.
+    for line in contents.lines() { //lines() returns an iterator over the lines of a string
+      //Check whether the line contains our query string.
+      if line.contains(query) {
+        //If it does, add it to the list of values we’re returning.
+        results.push(line);
+      }
+      //If it doesn’t, do nothing.
+    }
+    //Return the list of results that match.
+    results
 }
 
 #[cfg(test)]
@@ -41,11 +56,11 @@ mod tests {
   fn one_result() {
     let query = "duct";
     let contents = "\
-    Rust:
-    safe, fast, productive.
-    Pick three,";
+Rust:
+safe, fast, productive.
+Pick three,";
     
-    assert_eq!(vec!["safe, fast, productive"], search(query, contents));
+    assert_eq!(vec!["safe, fast, productive."], search(query, contents));
     
   }
 }
