@@ -139,5 +139,44 @@ Are you nobody, too?
 How dreary to be somebody!
 ```
 
+## Writing to Standard Error
+
+`stdout`- for general information
+`stderr`- for error messages
+
+`println!` - only prints to `stdout`
+
+Try running `cargo run > output.txt`
+Effectively, the error is being written to the `stdout` - (check the output file: "Problem parsing arguments: Not enough arguments")
+
+```bash
+➜  minigrep git:(main) ✗ cargo run > output.txt
+    Finished dev [unoptimized + debuginfo] target(s) in 0.15s
+     Running `target/debug/minigrep`
+```
+
+replace `println!` with `eprintln!`
+
+```bash
+➜  minigrep git:(main) ✗ cargo run > output.txt
+   Compiling minigrep v0.1.0 (/Users/noel/rustprojects/minigrep)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.85s
+     Running `target/debug/minigrep`
+Problem parsing arguments: Not enough arguments
+➜  minigrep git:(main) ✗
+```
+
+Now the output.txt is empty, and the error is printed.
+
+Run again `IGNORE_CASE=1 cargo run -- to poem.txt > output.txt` and you'll see the results of that case insensitive search in the output.txt file.
+
+```txt
+Insensitive search
+Are you nobody, too?
+How dreary to be somebody!
+To tell your name the livelong day
+To an admiring bog!
+```
+
 [Refactoring to Improve Modularity and Error Handling](https://rust-book.cs.brown.edu/ch12-03-improving-error-handling-and-modularity.html)
 [Test-Driven Development](https://rust-book.cs.brown.edu/ch12-04-testing-the-librarys-functionality.html)

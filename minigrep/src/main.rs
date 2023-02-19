@@ -8,13 +8,13 @@ fn main() {
     // dbg!(args);
     
     let config = Config::build(&args).unwrap_or_else(|err| {
-        println!("Problem parsing arguments: {}", err);
+        eprintln!("Problem parsing arguments: {}", err); //eprintln! will print to the stderr instead of stdout
         process::exit(1) // signaling that the the program has exited with an error (non-zero exit code)
     });
     
     //As the success return value of run is (), there is nothing to unwrap so we're only interested in handling the error with if let Err(e)
     if let Err(e) = minigrep::run(config) {
-        println!("Application error: {e}");
+        eprintln!("Application error: {e}");
         process::exit(1);
     }
 }

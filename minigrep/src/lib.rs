@@ -57,7 +57,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
       }
       //If it doesn’t, do nothing.
     }
-    //Return the list of results that match.
+    //Return the list of results that match
     results
 }
 
