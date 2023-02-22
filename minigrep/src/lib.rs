@@ -101,6 +101,19 @@ pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a st
   results
 }
 
+pub fn find_first_insensitive_match<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+  let query = query.to_lowercase();
+  let mut results = Vec::new();
+  
+  for line in contents.lines() {
+    if line.to_lowercase().contains(&query) {
+      results.push(line);
+      break;
+    }
+  }
+  results
+}
+
 #[cfg(test)]
 mod tests {
   use super::*;
@@ -130,4 +143,17 @@ Trust me.";
 
     assert_eq!(vec!["Rust:", "Trust me."], search_case_insensitive(query, contents));
   }
+  
+  #[test]
+  fn first_insensitive_match() {
+    let query = "rUst";
+    let contents = "\
+  Rust:
+  safe, fast, productive.
+  Pick three.
+  Duct tape.";
+        
+      assert_eq!(vec!["Rust:"], find_first_insensitive_match(query, contents))
+  }
+  
 }
