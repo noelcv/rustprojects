@@ -114,6 +114,29 @@ pub fn find_first_insensitive_match<'a>(query: &str, contents: &'a str) -> Vec<&
   results
 }
 
+pub fn find_first_sensitive_match<'a>(query: &str, contents: &'a str) -> String {
+  let mut found = Vec::new();
+  
+  for line in contents.lines() {
+    if line.contains(query) {
+      for char in line.chars() {
+        if line.contains(char){
+          found.push(query);
+          break;
+        }
+      }
+      break;
+    }
+  }
+
+  println!("Found: {:?}", found);
+  let my_string = found.into_iter().collect::<String>();
+  my_string 
+
+}
+
+
+
 #[cfg(test)]
 mod tests {
   use super::*;
@@ -154,6 +177,18 @@ Trust me.";
   Duct tape.";
         
       assert_eq!(vec!["Rust:"], find_first_insensitive_match(query, contents))
+  }
+  
+  #[test]
+  fn first_sensitive_match() {
+    let query = "safe";
+    let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.
+Duct tape.";
+  
+    assert_eq!("safe", find_first_sensitive_match(query, contents));
   }
   
 }
