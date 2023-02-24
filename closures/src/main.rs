@@ -1,3 +1,5 @@
+use std::time::Duration;
+use std::thread;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
@@ -55,4 +57,24 @@ fn main() {
     let user_pref2 = None;   //enum Option<T> { None, Some(T) }
     let giveaway2 = store.giveaway(user_pref2);
     println!("User with preference '{:?}' gets a '{:?}' shirt", user_pref2, giveaway2);
+    
+    let expensive_closure = |num: u32| -> u32 {
+        println!("calculating slowly...");
+        thread::sleep(Duration::from_secs(1));
+        num
+    };
+    
+    println!("Result: {:?}", expensive_closure(30));
+    //calculating slowly...
+    //after 3 seconds
+    //Result: 30
+    
+    let example_closure = |x| x; // the type of x is inferred from the type of the argument
+    let s = example_closure(String::from("hello")); //At this point the compiler will infer that x is of type String...
+    println!("s: {:?}", s); //s: "hello"
+    
+    // and this will then fail...
+    // let n = example_closure(5); //expected struct `String`, found integer - mismatched types
+    let n = example_closure(5.to_string()); //this will work
+    println!("n: {:?}", n); //n: "5"
 }
