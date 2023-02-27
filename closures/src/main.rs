@@ -77,4 +77,17 @@ fn main() {
     // let n = example_closure(5); //expected struct `String`, found integer - mismatched types
     let n = example_closure(5.to_string()); //this will work
     println!("n: {:?}", n); //n: "5"
+    
+    let flush_closure = |_| ();
+    let some_string = String::from("hello");
+    println!("flush_closure: {:?}", flush_closure(some_string)); //prints: flush_closure: ()  - the value is dropped immediately std::mem::drop
+
+    let list = vec![1, 2, 3];
+    println!("list before closure:  {:?}", list);
+    
+    let only_borrows = || println!("From closure: {:?}", list);
+    
+    println!("Before calling closure: {:?}", list);
+    only_borrows();
+    println!("After calling closure: {:?}", list);
 }
