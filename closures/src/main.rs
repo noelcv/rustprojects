@@ -98,10 +98,20 @@ fn main() {
     //prints: Before definining closure, [1, 2, 3, 4, 5]
 
     let mut borrows_mutably = || list.push(7);
-
+    //a print here wouldn't be allowed - between closure definition and closure call, because a
+    //mutable borrow is in place
     borrows_mutably();
     println!("After calling closure - borrows_mutably(): {:?} ", list);
     //prints: After calling closure - borrows_mutably(): [1, 2, 3, 4, 5, 7]
 
+    let list = vec![10, 20, 30];
+    println!("List before defining closure within new thread: {:?}",list);
+
+    //MOVE - we use it to transfer ownership of list to the new thread
+    thread::spawn(move || println!("From thread: {:?}", list))
+        .join()
+        .unwrap()
+
+    
 
 }
