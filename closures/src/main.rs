@@ -85,9 +85,23 @@ fn main() {
     let list = vec![1, 2, 3];
     println!("list before closure:  {:?}", list);
     
+    // a variable can bind to a closure for later reference
     let only_borrows = || println!("From closure: {:?}", list);
     
     println!("Before calling closure: {:?}", list);
     only_borrows();
     println!("After calling closure: {:?}", list);
+
+    //CAPTURING Mutable References
+    let mut list = vec![1, 2, 3, 4, 5];
+    println!("Before definining closure, {:?}", list);
+    //prints: Before definining closure, [1, 2, 3, 4, 5]
+
+    let mut borrows_mutably = || list.push(7);
+
+    borrows_mutably();
+    println!("After calling closure - borrows_mutably(): {:?} ", list);
+    //prints: After calling closure - borrows_mutably(): [1, 2, 3, 4, 5, 7]
+
+
 }
