@@ -45,6 +45,12 @@ impl Inventory {
     }
 }
 
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
 fn main() {
     let store = Inventory {
         shirts: vec![ShirtColor::Blue, ShirtColor::Red, ShirtColor::Blue],
@@ -110,8 +116,16 @@ fn main() {
     //MOVE - we use it to transfer ownership of list to the new thread
     thread::spawn(move || println!("From thread: {:?}", list))
         .join()
-        .unwrap()
+        .unwrap();
 
     
-
+    let mut list = [
+        Rectangle { width: 30, height: 50 },
+        Rectangle { width: 10, height: 40 },
+        Rectangle { width: 60, height: 45 },
+        Rectangle { width: 95, height: 35 },
+    ];
+    
+    list.sort_by_key(|rect| rect.width);
+    println!("Sorted list: {:#?}", list);
 }
