@@ -56,7 +56,7 @@ let example_closure = |x| x; // the type of x is inferred from the type of the a
 
 - don't move captured values out of their bodies
 - but might mutate them
-- these closures can be used multiple times
+- these closures can be used / called multiple times
 
 ### Fn
 

@@ -126,6 +126,30 @@ fn main() {
         Rectangle { width: 95, height: 35 },
     ];
     
+    
+    // sort_by_key implements FnMut on the closure -- because it will need to call the closure multiple times: for each element in the slice
     list.sort_by_key(|rect| rect.width);
     println!("Sorted list: {:#?}", list);
+    
+    
+    
+
+    let mut another_list = [
+        Rectangle { width: 30, height: 50 },
+        Rectangle { width: 10, height: 40 },
+        Rectangle { width: 60, height: 45 },
+        Rectangle { width: 95, height: 35 },
+    ];
+    
+    
+    let mut num_sort_operations = 0;
+    
+    list.sort_by_key(| rect | {
+        //this works because the closure is only capturing a reference that is also being used to perform another operation - increment the counter
+        // if we'd try tou push an auxiliar value to a vector, as a way to keep track of the number of operations, we'd get an error as we're trying to move values out of the scope of the closure
+        num_sort_operations += 1; 
+        rect.width
+    });
+    
+    println!("Sorted list: {:#?}, sorted in {num_sort_operations} operations", list);
 }
