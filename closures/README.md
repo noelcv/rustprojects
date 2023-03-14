@@ -43,3 +43,22 @@ let example_closure = |x| x; // the type of x is inferred from the type of the a
 ```
 
 >**"Top-level functions can be part of a library's external interface, while closures cannot be directly exposed"**
+
+## Three Traits
+
+### FnOnce
+
+- can be called only once
+- able to move values after their body
+- all closures implement at least this trait
+
+### FnMut
+
+- don't move captured values out of their bodies
+- but might mutate them
+- these closures can be used multiple times
+
+### Fn
+
+- don't move captured values
+- don't mutate
